@@ -1,0 +1,10 @@
+# Visual Studio / .NET
+bin/
+obj/
+.vs/
+
+# Statiq output
+StatiqSite/output/
+
+# user files
+*.user

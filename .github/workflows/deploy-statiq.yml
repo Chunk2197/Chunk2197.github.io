@@ -1,0 +1,31 @@
+name: Build and deploy Statiq site
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '8.0.x'
+
+    - name: Restore and build
+      working-directory: ./StatiqSite
+      run: |
+        dotnet restore
+        dotnet run --project .
+
+    - name: Deploy to gh-pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./StatiqSite/output
+        publish_branch: gh-pages
+        keep_history: true
