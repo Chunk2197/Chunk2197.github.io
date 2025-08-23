@@ -1,0 +1,26 @@
+@inherits Statiq.Web.Pages.RazorPage
+@{
+    Layout = null;
+    var posts = Context.Inputs.Descendants("posts").OrderByDescending(d => d.Get<DateTime>("Date")).Take(20);
+    var siteTitle = Context.GetDataValue<string>("title") ?? "Davis DIY";
+    var siteUrl = "https://davis.diy"; // update if different
+}
+@{ Response.ContentType = "application/rss+xml; charset=utf-8"; }
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0">
+  <channel>
+    <title>@siteTitle</title>
+    <link>@siteUrl</link>
+    <description>@("Recent posts from " + siteTitle)</description>
+    @foreach(var post in posts)
+    {
+        <item>
+            <title>@post.GetString("Title")</title>
+            <link>@(siteUrl + post.Destination.ToString())</link>
+            <guid>@(siteUrl + post.Destination.ToString())</guid>
+            <pubDate>@post.Get<DateTime>("Date").ToUniversalTime().ToString("r")</pubDate>
+            <description><![CDATA[@post.Content]]></description>
+        </item>
+    }
+  </channel>
+</rss>
