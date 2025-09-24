@@ -1,0 +1,15 @@
+@inherits Statiq.Web.Pages.Page
+@{
+    Layout = "Layout.cshtml";
+    var posts = Context.Inputs.Descendants("posts");
+    var tags = posts.SelectMany(p => p.Get<IEnumerable<string>>("Tags") ?? Enumerable.Empty<string>()).Distinct().OrderBy(t => t);
+}
+<section>
+    <h2>Tags</h2>
+    <ul>
+    @foreach(var tag in tags)
+    {
+        <li><a href="/tags/@tag/">@tag</a></li>
+    }
+    </ul>
+</section>

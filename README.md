@@ -25,3 +25,8 @@ Notes:
 
 - The `CNAME` file in the repository root contains the custom domain: `davis.diy`.
 - Edit content in `StatiqSite/input/` (Markdown files) and templates in the Statiq project to customize the site.
+
+Feed & tags
+
+- The site exposes an RSS feed at `/feed.xml` once deployed. The feed is generated from posts in `StatiqSite/input/posts/`.
+- Tags: a tag index is available at `/tags/`, and per-tag pages at `/tags/{tag}/`.
